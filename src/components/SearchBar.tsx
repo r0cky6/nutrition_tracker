@@ -1,8 +1,6 @@
 import s from '@/styles/SearchBar.module.css'
 import { api } from '@/utils/api'
-import Image from 'next/image'
 import React, { ForwardedRef, Ref, forwardRef, useEffect, useRef, useState } from 'react'
-import { resourceLimits } from 'worker_threads'
 
 interface SearchBarProps {
   placeholder?: string, 
@@ -30,7 +28,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ placeholder = 'search', variant =
       data?.common && setResults(data.common)
     },
   })
-  useEffect(()=> { ctx.items.search.invalidate() }, [query])
+  useEffect(()=> { ctx.items.search.invalidate().then((res)=>res) }, [query])
 
   return (
     <>
@@ -39,7 +37,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ placeholder = 'search', variant =
           ref={input}
           className={`${variant == 'flat' ? s.flat : s.input}`}
           type="text"
-          placeholder={placeholder}
+          placeholder={placeholder || ''}
           autoCapitalize="false"
           autoComplete="false"
           autoSave="false"

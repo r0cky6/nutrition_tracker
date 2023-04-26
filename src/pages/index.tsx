@@ -28,7 +28,7 @@ export const AddRecipe = ({id}: {id: number}) => {
   const add = api.recipes.addRecipe.useMutation({
     onSuccess: (data) => {
       if (data?.id) return router.push(`/recipes/${data.id}/edit`)
-      ctx.recipes.list.invalidate()
+      ctx.recipes.list.invalidate().then(res => res)
     }
   })
 

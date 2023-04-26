@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "debian-openssl-1.1.x"]
 }
 
@@ -16,25 +16,22 @@ model auths {
 }
 
 model categories {
-  id              Int               @id @default(autoincrement())
-  category        String?           @default("new category") @db.VarChar(40)
-  recipe_category recipe_category[]
+  id       Int     @id @default(autoincrement())
+  category String? @default("new category") @db.VarChar(40)
 }
 
 model cuisines {
-  id             Int              @id @default(autoincrement())
-  name           String?          @db.VarChar(40)
-  alt            String?          @db.VarChar(20)
-  icon           String?          @db.VarChar(20)
-  recipe_cuisine recipe_cuisine[]
+  id   Int     @id @default(autoincrement())
+  name String? @db.VarChar(40)
+  alt  String? @db.VarChar(20)
+  icon String? @db.VarChar(20)
 }
 
 model diets {
-  id          Int           @id @default(autoincrement())
-  name        String?       @db.VarChar(40)
-  alt         String?       @db.VarChar(20)
-  desc        String?       @db.VarChar(100)
-  recipe_diet recipe_diet[]
+  id   Int     @id @default(autoincrement())
+  name String? @db.VarChar(40)
+  alt  String? @db.VarChar(20)
+  desc String?
 }
 
 model ingredients {
@@ -59,22 +56,20 @@ model items {
 
 model log {
   id      Int      @id @default(autoincrement())
-  date    DateTime @db.Timestamp(6)
+  date    DateTime @default(now()) @db.Timestamp(6)
   recipe  Int?
   recipes recipes? @relation(fields: [recipe], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model nutrients {
-  id                               Int     @id @default(autoincrement())
-  calories                         Int?    @default(0)
-  protein                          Int?    @default(0)
-  carbohydrates                    Int?    @default(0)
-  total_fat                        Int?    @default(0)
-  saturated_fat                    Int?    @default(0)
-  sodium                           Int?    @default(0)
-  fiber                            Int?    @default(0)
-  potassium                        Int?    @default(0)
-  items_items_nutrientsTonutrients items[] @relation("items_nutrientsTonutrients")
+  id                               Int      @id @default(autoincrement())
+  energy                           Decimal? @default(0) @db.Decimal(6, 2)
+  carbohydrates                    Decimal? @default(0) @db.Decimal(6, 2)
+  protein                          Decimal? @default(0) @db.Decimal(6, 2)
+  fiber                            Decimal? @default(0) @db.Decimal(6, 2)
+  sugar_total                      Decimal? @default(0) @db.Decimal(6, 2)
+  fat_total                        Decimal? @default(0) @db.Decimal(6, 2)
+  items_items_nutrientsTonutrients items[]  @relation("items_nutrientsTonutrients")
 }
 
 model pantry {
@@ -87,47 +82,20 @@ model pantry {
 }
 
 model recipes {
-  id              Int               @id @default(autoincrement())
-  title           String?           @default("new recipe") @db.VarChar(50)
-  author          Int?
-  yeald           Int?
-  unit            String?           @default("g") @db.VarChar(10)
-  ingredients     ingredients[]
-  log             log[]
-  recipe_category recipe_category[]
-  recipe_cuisine  recipe_cuisine[]
-  recipe_diet     recipe_diet[]
-  users           users?            @relation(fields: [author], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id          Int           @id @default(autoincrement())
+  title       String?       @default("new recipe") @db.VarChar(50)
+  author      Int?
+  yeald       Decimal?      @default(0) @db.Decimal
+  unit        String?       @default("g") @db.VarChar(10)
+  ingredients ingredients[]
+  log         log[]
+  users       users?        @relation(fields: [author], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model users {
   id        Int       @id @default(autoincrement())
   full_name String    @default("new user") @db.VarChar(30)
-  auth_id   Int
+  auth_id   Int?
   recipes   recipes[]
-  auths     auths     @relation(fields: [auth_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "users_fk1")
-}
-
-model recipe_category {
-  id         Int         @id @default(autoincrement())
-  recipe     Int?
-  category   Int?
-  categories categories? @relation(fields: [category], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  recipes    recipes?    @relation(fields: [recipe], references: [id], onDelete: NoAction, onUpdate: NoAction)
-}
-
-model recipe_cuisine {
-  id       Int       @id @default(autoincrement())
-  recipe   Int?
-  cuisine  Int?
-  cuisines cuisines? @relation(fields: [cuisine], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  recipes  recipes?  @relation(fields: [recipe], references: [id], onDelete: NoAction, onUpdate: NoAction)
-}
-
-model recipe_diet {
-  id      Int      @id @default(autoincrement())
-  recipe  Int?
-  diet    Int?
-  diets   diets?   @relation(fields: [diet], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  recipes recipes? @relation(fields: [recipe], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  auths     auths?    @relation(fields: [auth_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "users_fk1")
 }

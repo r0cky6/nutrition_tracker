@@ -14,7 +14,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <div style={{width: '1400px', margin: '0 auto'}}>
+      <div style={{maxWidth: 'min(1400px, 70vw)', margin: '0 auto'}}>
         <div style={{display: 'grid', gridAutoFlow: 'column', justifyContent: 'space-between', alignItems: 'center'}}>
           <Link href='/'>Home</Link>
           <AuthWidget />

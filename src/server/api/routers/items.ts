@@ -30,7 +30,7 @@ export const itemsRouter = createTRPCRouter({
       }).then(res => res.json())
       
       const nutrients = await ctx.prisma.nutrients.create({data: {
-        calories: res.nf_calories,
+        energy: res.nf_calories,
         protein: res.nf_protein,
         carbohydrates: res.nf_total_carbohydrate,
         total_fat: res.nf_total_fat,
