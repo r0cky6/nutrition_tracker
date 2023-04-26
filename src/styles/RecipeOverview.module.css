@@ -1,0 +1,57 @@
+.recipe_overview__container{
+    max-width: max(500px, 80%);
+    margin: 0 auto;
+}
+
+/* INSTRUCTIONS */
+.recipe_instructions__container{
+    display: flex; 
+    width: 100%;
+    column-gap: 1em;
+}
+.recipe_instructions__edit, .recipe_instructions__preview {
+    flex: 1;
+    background-color: rgba(194, 194, 194, 0.123);
+    border: 1px solid rgba(194, 194, 194, 0.445);
+    border-radius: .1em; 
+}
+.recipe_instructions__edit{
+    resize: none;
+}
+.recipe_instructions__edit{
+    font-size: .8rem;
+}
+.recipe_instructions__preview {
+    padding: 1rem;
+}
+.recipe_instructions__preview p {
+    display: grid;
+}
+.recipe_instructions__preview img{
+    margin: 0 auto;
+    width: min(70%, 500px);
+    justify-self: center;
+} 
+
+input.recipe__title, .recipe__yeald, .recipe__unit{
+    padding: 0;
+    line-height: inherit;
+    font-size: inherit;
+    font-weight: inherit
+}
+.tags{
+    padding: 1ch 0;
+}
+.tags span{
+    margin: 0 .5ch;
+    background-color: rgb(185, 185, 185);
+    padding: .5em 1em;
+    border-radius: 10em;
+}
+
+.recipe__yeald{
+    width: 6ch;
+}
+.recipe__unit{
+    width: 7ch;
+}
