@@ -1,6 +1,6 @@
 import s from '@/styles/SearchBar.module.css'
 import { api } from '@/utils/api'
-import React, { ForwardedRef, Ref, forwardRef, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 interface SearchBarProps {
   placeholder?: string, 
